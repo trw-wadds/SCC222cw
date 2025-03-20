@@ -5,6 +5,7 @@ import random
 import time
 
 from KNNClassifier import KNNClassifier
+from NaiveBayes import NaiveBayes
 
 student_id = 38995239
 random.seed(student_id)
@@ -52,25 +53,25 @@ test_ts2 = time.time()
 accuracy = knn.accuracy_score(x_test, y_test)
 print(F"Accuracy: {accuracy * 100:.2f}%")
 print(F"Time taken to train: {train_ts2 - train_ts1} seconds"
-      F"\nTime taken to test: {test_ts2 - train_ts1} seconds")
+      F"\nTime taken to test: {test_ts2 - test_ts1} seconds")
 
 ### Naïve Bayes
 # train
-
+nb = NaiveBayes()
 train_ts1 = time.time()
-
+nb.fit(x_train, y_train)
 train_ts2 = time.time()
 
 # test
 test_ts1 = time.time()
-
+predicted_classes = knn.predict(x_test)
 test_ts2 = time.time()
 
 # evaluation
-accuracy = 0
+accuracy = nb.accuracy_score(x_test, y_test)
 print(F"Accuracy: {accuracy * 100:.2f}%")
 print(F"Time taken to train: {train_ts2 - train_ts1} seconds"
-      F"\nTime taken to test: {test_ts2 - train_ts1} seconds")
+      F"\nTime taken to test: {test_ts2 - test_ts1} seconds")
 
 ### Decision Tree
 # train
@@ -88,7 +89,7 @@ test_ts2 = time.time()
 accuracy = 0
 print(F"Accuracy: {accuracy * 100:.2f}%")
 print(F"Time taken to train: {train_ts2 - train_ts1} seconds"
-      F"\nTime taken to test: {test_ts2 - train_ts1} seconds")
+      F"\nTime taken to test: {test_ts2 - test_ts1} seconds")
 
 ### Support Vector Machine
 # train
@@ -106,4 +107,4 @@ test_ts2 = time.time()
 accuracy = 0
 print(F"Accuracy: {accuracy * 100:.2f}%")
 print(F"Time taken to train: {train_ts2 - train_ts1} seconds"
-      F"\nTime taken to test: {test_ts2 - train_ts1} seconds")
+      F"\nTime taken to test: {test_ts2 - test_ts1} seconds")
