@@ -4,9 +4,6 @@ import matplotlib.pyplot as plt
 import random
 import time
 
-from sklearn.preprocessing import MinMaxScaler
-import seaborn as sns
-
 from KNNClassifier import KNNClassifier
 
 student_id = 38995239
@@ -16,24 +13,6 @@ header = ["ID","RI","Na","Mg","Al","Si","K","Ca","Ba","Fe","Type"]
 df = pd.read_csv("glass.data",header=None,names=header)
 df = df.drop(df.columns[0], axis=1)
 # print(df)
-
-scaler = MinMaxScaler()
-df_scaled = pd.DataFrame(scaler.fit_transform(df.drop("Type", axis=1)), columns=df.columns[:-1])
-
-# Set up the plot
-fig, axes = plt.subplots(nrows=3, ncols=3, figsize=(15, 15))
-
-# Flatten the axes array for easy iteration
-axes = axes.flatten()
-
-# Loop through each column and plot its histogram
-for i, column in enumerate(df_scaled.columns):
-    sns.histplot(df_scaled[column], kde=True, ax=axes[i], color='skyblue')
-    axes[i].set_title(f'Distribution of {column}')
-
-# Adjust layout to avoid overlap
-plt.tight_layout()
-plt.show()
 
 def train_test_split(x, y, test_size=0.2, seed=student_id):
     if len(x) != len(y):
@@ -45,10 +24,10 @@ def train_test_split(x, y, test_size=0.2, seed=student_id):
 
     split_point = int(len(x) * (1 - test_size))
 
-    x_train = x_shuffled[0:split_point]
-    x_test = x_shuffled[split_point:len(x)]
-    y_train = y_shuffled[0:split_point]
-    y_test = y_shuffled[split_point:len(y)]
+    x_train = x_shuffled[:split_point]
+    x_test = x_shuffled[split_point:]
+    y_train = y_shuffled[:split_point]
+    y_test = y_shuffled[split_point:]
 
     return np.array(x_train), np.array(x_test), np.array(y_train), np.array(y_test)
 
