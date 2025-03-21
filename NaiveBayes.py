@@ -10,7 +10,7 @@ class NaiveBayes():
         
         self.mean = {c: np.mean(X[y == c], axis=0) for c in self.unique_classes}
         self.variance = {c: np.var(X[y == c], axis=0) for c in self.unique_classes}
-        self.variance = {c: np.maximum(1e-9, self.variance[c]) for c in self.unique_classes}
+        self.variance = {c: np.maximum(1e-6, self.variance[c]) for c in self.unique_classes}
         self.prior = {c: np.sum(y == c) / n_samples for c in self.unique_classes}
 
     def predict(self, X):
@@ -19,7 +19,7 @@ class NaiveBayes():
 
     def _predict(self, x):
         posteriors = [
-            self.prior[c] * np.prod(self.probabilityDensityFunc(c, x), axis=0) for c in self.unique_classes
+            np.log(self.prior[c]) + np.sum(np.log(self.probabilityDensityFunc(c, x) + 1e-9), axis=0) for c in self.unique_classes
         ]
         return self.unique_classes[np.argmax(posteriors)]
 
