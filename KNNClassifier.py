@@ -5,6 +5,7 @@ class KNNClassifier():
         self.k_neighbours = k
 
     def fit(self, X, y):
+        X = (X - np.mean(X, axis=0)) / np.std(X, axis=0) # Normalise X values
         n_samples = np.shape(X)[0]
 
         if self.k_neighbours > n_samples:
@@ -20,6 +21,7 @@ class KNNClassifier():
         self.y_train = y
 
     def predict(self, X):
+        X = (X - np.mean(X, axis=0)) / np.std(X, axis=0) # Normalise X values
         preds = [self.euclidean_prediction(x) for x in X]
         return np.array(preds)
         
