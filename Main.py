@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 import random
 import time
 
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import ConfusionMatrixDisplay
+
 from KNNClassifier import KNNClassifier
 from NaiveBayes import NaiveBayes
 from SVM import SVM
@@ -44,6 +47,9 @@ if __name__ == "__main__":
       x_train_normalised = (x_train - np.mean(x_train, axis=0)) / (np.std(x_train, axis=0) + 1e-4) # Normalise X values
       x_test_normalised = (x_test - np.mean(x_train, axis=0)) / (np.std(x_train, axis=0) + 1e-4) # Normalise X values
 
+      print(len(x_train[0]))
+      print(len(x_train_normalised[0]))
+
       ### KNN
       # train
       knn = KNNClassifier()
@@ -58,9 +64,14 @@ if __name__ == "__main__":
 
       # evaluation
       accuracy = knn.accuracy_score(x_test, y_test)
-      print(f"Accuracy: {accuracy * 100:.2f}%")
+      print(f"KNN: Accuracy: {accuracy * 100:.2f}%")
       print(f"Time taken to train: {train_ts2 - train_ts1} seconds"
             f"\nTime taken to test: {test_ts2 - test_ts1} seconds")
+      
+      knn_matrix = confusion_matrix(y_test, predicted_classes)
+      disp = ConfusionMatrixDisplay(confusion_matrix=knn_matrix)
+      disp.plot()
+      plt.title("KNN")
 
       ### Naïve Bayes
       # train
@@ -76,9 +87,14 @@ if __name__ == "__main__":
 
       # evaluation
       accuracy = nb.accuracy_score(x_test, y_test)
-      print(f"Accuracy: {accuracy * 100:.2f}%")
+      print(f"Naive Bayes: Accuracy: {accuracy * 100:.2f}%")
       print(f"Time taken to train: {train_ts2 - train_ts1} seconds"
             f"\nTime taken to test: {test_ts2 - test_ts1} seconds")
+      
+      nb_matrix = confusion_matrix(y_test, predicted_classes)
+      disp = ConfusionMatrixDisplay(confusion_matrix=nb_matrix)
+      disp.plot()
+      plt.title("Naive Bayes")
 
       ### Support Vector Machine
       # train
@@ -93,9 +109,15 @@ if __name__ == "__main__":
 
       # evaluation
       accuracy = svm.accuracy_score(x_test, y_test)
-      print(f"Accuracy: {accuracy * 100:.2f}%")
+      print(f"SVM: Accuracy: {accuracy * 100:.2f}%")
       print(f"Time taken to train: {train_ts2 - train_ts1} seconds"
             f"\nTime taken to test: {test_ts2 - test_ts1} seconds")
+      
+      svm_matrix = confusion_matrix(y_test, predicted_classes)
+      disp = ConfusionMatrixDisplay(confusion_matrix=svm_matrix)
+      disp.plot()
+      plt.title("SVM")
+      plt.show()
 
       ### Decision Trees
       # train

@@ -19,13 +19,13 @@ class SVM():
         ]
         # iterate through, creating a hyperplane for each
         for c1, c2 in self.class_pairings:
-            print(y)
+            #print(y)
             i = np.where((y == c1) | (y == c2))[0]
-            print(i)
+            #print(i)
             # make feature pairings
             feature_pairings_X = X[i]
             feature_pairings_y = y[i]
-            print(feature_pairings_X, feature_pairings_y, "\n\n")
+            #print(feature_pairings_X, feature_pairings_y, "\n\n")
             #print(f"{len(i)}, {len(feature_pairings_X)}, {len(feature_pairings_y)}")
             #print(f"Training hyperplane for classes {c1} vs {c2}")
             hyperPlane = HyperPlane(self.learning_rate, self.lambda_param, self.n_iterations)
@@ -44,10 +44,10 @@ class SVM():
         return self.unique_classes[np.argmax(votes, axis=1)]
 
     def accuracy_score(self, x_test, y_test):
-        print(x_test)
-        print(np.ndarray.round(x_test, 1))
+        #print(x_test)
+        #print(np.ndarray.round(x_test, 1))
         predictions = self.predict(x_test)
-        print(f"Predictions: {predictions}")
+        #print(f"Predictions: {predictions}")
         return np.mean(predictions == y_test)
     
 class HyperPlane():
